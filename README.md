@@ -1,6 +1,6 @@
 # Docker images for geospatial applications
 
-[![Build Status](https://travis-ci.com/perrygeo/docker-gdal-base.svg?branch=master)](https://travis-ci.com/perrygeo/docker-gdal-base)
+[![Build Status](https://travis-ci.com/russellhoff/docker-gdal-base.svg?branch=master)](https://travis-ci.com/russellhoff/docker-gdal-base)
 
 `docker-gdal-base` is a continuous integration system that
 
@@ -15,16 +15,16 @@
 - remain freely available.
 - for this base image,
   - leverage caching by using separate `RUN` steps.
-  - provide common shared libraries, a full C/C++ build environment, and Python 3.6.
+  - provide common shared libraries, a full C/C++ build environment, and Python 3.9.
   - install all compiled binaries and libs to `/usr/local`.
 - for subsequent production images that inherit from it
   - use multistage builds to minimize the final image size; you don't need carry around the entire build environment in production.
 
-See [`perrygeo/gdal-base` on Dockerhub](https://hub.docker.com/r/perrygeo/gdal-base)
+See [`russellhoff/gdal-base` on Dockerhub](https://hub.docker.com/r/russellhoff/gdal-base)
 
 ## Packages and version numbers
 
-Dockerfiles are based on [`python:3.8-slim-buster`](https://github.com/docker-library/python/blob/master/3.8/buster/slim/Dockerfile) which in turn is based on Debian 10/Buster.
+Dockerfiles are based on [`python:3.9-slim-buster`](https://github.com/docker-library/python/blob/master/3.9/buster/slim/Dockerfile) which in turn is based on Debian 10/Buster.
 
 The following versions built from source:
 
@@ -53,7 +53,7 @@ To run the GDAL command line utilities on local files, on data in the current wo
 ```bash
 docker run --rm -it \
     --volume $(shell pwd)/:/data \
-    perrygeo/gdal-base:latest \
+    russellhoff/gdal-base:latest \
     gdalinfo /data/your.tif
 ```
 
@@ -61,7 +61,7 @@ You can set it as an alias to save typing
 
 ```bash
 function with-gdal-base {
-    docker run --rm -it --volume $(pwd)/:/data perrygeo/gdal-base:latest "$@"
+    docker run --rm -it --volume $(pwd)/:/data russellhoff/gdal-base:latest "$@"
 }
 
 with-gdal-base gdalinfo /data/your.tif
@@ -80,7 +80,7 @@ Use a multistage build to pull your binaries and shared library objects in `/usr
 Example:
 
 ```Dockerfile
-FROM perrygeo/gdal-base:latest as builder
+FROM russellhoff/gdal-base:latest as builder
 
 # Python dependencies that require compilation
 COPY requirements.txt .
@@ -90,7 +90,7 @@ RUN pip uninstall cython --yes
 
 # ------ Second stage
 # Start from a clean image
-FROM python:3.8-slim-buster as final
+FROM python:3.9-slim-buster as final
 
 # Install some required runtime libraries from apt
 RUN apt-get update \

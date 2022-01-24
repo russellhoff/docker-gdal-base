@@ -3,7 +3,7 @@
 # github: perrygeo/docker-gdal-base
 # docker: perrygeo/gdal-base
 #----------------------------------- #
-FROM python:3.8-slim-buster as builder
+FROM python:3.9-slim-buster as builder
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
@@ -119,8 +119,8 @@ RUN wget -q -O openjpeg-${OPENJPEG_VERSION}.tar.gz https://github.com/uclouvain/
     && echo "building openjpeg ${OPENJPEG_VERSION}..." \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV GDAL_SHORT_VERSION 3.2.1
-ENV GDAL_VERSION 3.2.1
+ENV GDAL_SHORT_VERSION 3.4.1
+ENV GDAL_VERSION 3.4.1
 RUN wget -q https://download.osgeo.org/gdal/${GDAL_SHORT_VERSION}/gdal-${GDAL_VERSION}.tar.gz
 RUN tar -xzf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_SHORT_VERSION} && \
     ./configure \

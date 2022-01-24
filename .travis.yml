@@ -5,8 +5,8 @@ env:
   global:
     # The following secret must be set
     # DOCKER_PASS
-    - DOCKER_USER=perrygeo
-    - REPO=perrygeo/gdal-base  # Dockerhub repository name, not github
+    - DOCKER_USER=russellhoff
+    - REPO=russellhoff/gdal-base  # Dockerhub repository name, not github
     - COMMIT=${TRAVIS_COMMIT::8}
     - DATE=`date +%Y%m%d`
     - TAG="$DATE-$COMMIT"
